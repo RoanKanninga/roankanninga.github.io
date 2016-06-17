@@ -46,22 +46,70 @@ window.onclick = function(event) {
     </div>
 
     <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
+<div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-<div class="dropdown">
-  <button onmouseenter="myFunction()" class="dropbtn">Installation</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="https://roankanninga.github.io/InstallEnv.html">Install Environment</a>
-    <a href="https://roankanninga.github.io/InstallNGS.html>Install NGS_DNA pipeline</a>
-    <a href="https://roankanninga.github.io/InstallRunNGS.html>Prepare and Run pipeline</a>
-  </div>
+		<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+		<ul>
+  			<li><a class="active" href="#home">Home</a></li>
+  			<li class="dropdown">
+				<a href="#" class="dropbtn">Installation</a>
+				<div class="dropdown-content">
+				<a href="https://roankanninga.github.io/InstallEnv.html">Installing Environment</a>
+				<a href="https://roankanninga.github.io/InstallNGS.html">Installing NGS_DNA pipeline</a>
+  				<a href="https://roankanninga.github.io/InstallRunNGS.html">Prepare and Run pipeline</a>
+				</div>
+			</li>
+			<li><a href="https://github.com/NGS_DNA">Source code</a></li>
+			<li><a href="https://roankanninga.github.io/Documentation.html">Documentation</a></li>	
+		</ul>
 </div>
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+<div>
+<p>
+1a) Get molgenis-easybuild repo
+Now that the base is installed we have to have the molgenis easybuild configs because it contains a lot of custom easyconfigs that are (sometimes were at the moment we began with this) not in the original easybuild repo from Ghent University: https://github.com/molgenis/easybuild-easyconfigs
+There are 2 options
+- Fork this repo to your own repo and then do a git clone (on the cluster, then you can skip 9b)
+- Download the latest zip or tar.gz at
+https://github.com/molgenis/easybuild-easyconfigs/releases/ (proceed to 1b)
 
+1b) Put the new repo on the cluster/VM 
+scp -r easybuild-easyconfigs \yourusername@yourcluster.nl:${root}/${pathToMYeasybuildconfigs}
+
+2) Installing NGS_DNA 
+We are now ready to run the NGS_DNA easyconfig. We first have to load EasyBuild, this can be done with this command
+
+>module load EasyBuild
+The NGS_DNA pipeline has a lot of dependencies, these are handled by easybuild when the --robot command is executed. Since we have also our own repo we have to give the path to that also. There can be multiple paths to easybuild configs, just separate them by colon. 
+N.B. the order in which you give the paths are important! To original easybuild path can be left empty (just a colon is enough)
+
+>eb NGS_DNA-3.2.3.eb --robot -–robot-paths=${pathToMYeasybuild}/easybuild-easyconfigs/easybuild/easyconfigs/:
+
+Note: some software cannot be downloaded automagically due to for example licensing or technical issues and the build will fail initially.
+In these cases you will have to download manually and copy the sources to
+ ${HPC_ENV_PREFIX}/sources/[a-z]/NameOfTheSoftwarePackage/
+This is the case for example for Java. Therefore:
+scp jdk-7u80-linux-x64.tar.gz your_account@zinc-finger.gcc.rug.nl: 
+${root}/apps/sources/j/Java/
+scp jdk-8u45-linux-x64.tar.gz your_account@yourcluster.nl: ${root}/apps/sources/j/Java/
+scp GATK-3.5.tar.gz your_account@zinc-finger.gcc.rug.nl: ${root}/apps/sources/g/GATK/
+tabix.0.18.6.tar.gz your_account@zinc-finger.gcc.rug.nl: ${root}/apps/sources/t/tabix
+scp snpEff-4.1g.tar.gz your_account@zinc-finger.gcc.rug.nl: ${root}/apps/sources/s/snpEff/
+N.B.2. change config file of snpEff: data.dir=./data should be data.dir=${root}/apps/data/snpEff
+
+3) Installing the necessary resources (reference genome, dbSNP etc) 
+Run the script NGS_resources to install the required resources
+sh NGS_DNA-resources.sh 
+
+This will download from the GATK server parts of the 2.8 bundle 
+Note: Sometimes the GATK ftp server can be down/instable, try it a couple of times 
+
+4) Creating workdir structure
+Run the script makestructure.sh
+
+</p>
+
+</div>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">

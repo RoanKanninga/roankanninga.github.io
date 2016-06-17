@@ -66,76 +66,38 @@ window.onclick = function(event) {
 </div>
 <div>
 <p>
+1) Copy rawdata to rawdata ngs folder
+scp –r 198210_SEQ_RUNTEST_FLOWCELLXX \
+username@yourcluster: ${root}/groups/$groupname/${tmpDir}/rawdata/ngs/
 
-Install environment
-1) Get depad-utils and configure environment.
-cd ${HOME}
-git clone https://github.com/molgenis/depad-utils.git 
-or 
-download depad-utils.tar.gz https://github.com/molgenis/depad-utils/releases 
+2) Create a folder in the generatedscripts folder
+mkdir ${root}/groups/$groupname/${tmpDir}/generatedscripts/TestRun
 
-Make sure ~/git/depad-utils/hpc-2.x/etc/skel/.bashrc was already deployed as root
-and that /etc/skel/.bashrc was copied to your home dir when it was created.
-If your .bashrc does not have the stuff from the template, you can add it manually and notify an admin to deploy the template in /etc/skel/.
-To verify /apps/modules/modules.bashrc gets sourced: logout + login.
-When ${HPC_ENV_PREFIX} is set your are good to continue to the next step.
+3) Copy samplesheet to generatedscripts folder
+scp –r TestRun \
+username@yourcluster:/groups/$groupname/${tmpDir}/generatedscripts/
 
-echo ${HPC_ENV_PREFIX}
+Note: the name of the folder should be the same as csv file
 
-2) Create main folders for our HPC environment.
-mkdir -m 0755 ${HPC_ENV_PREFIX}
-mkdir -m 2775 ${HPC_ENV_PREFIX}/data/
-mkdir -m 2775 ${HPC_ENV_PREFIX}/modules/
-mkdir -m 2775 ${HPC_ENV_PREFIX}/software/
-mkdir -m 2775 ${HPC_ENV_PREFIX}/sources/
-mkdir -m 2770 ${HPC_ENV_PREFIX}/.tmp/
+4) Run the generate script 
+module load NGS_DNA
+cd ${root}/groups/$groupname/${tmpDir}/generatedscripts/TestRun
+cp $EBROOTNGS_DNA/generate_template.sh .
+sh generate_template.sh
+cd scripts
 
-3) Configure system to use Lmod as module command.
-Note: Lmod must already have been deployed as root using your Linux distro's package manager.
-In our case for CentOS use $root>: yum install lmod
-cd ~/git/depad-utils/hpc-2.x/apps/modules/
-cp -r modules* .lmod/ /apps/modules/
+Note: if you want to run locally, you should change in the CreateInhouseProjects.sh script the backend (this can be done almost at the end of the script where you have something like:
+sh ${EBROOTMOLGENISMINCOMPUTE}/molgenis_compute.sh 
+search for –b slurm and change it into –b localhost
 
-4) Download EasyBuild bootstrap script
-export EASYBUILD_VERSION=2.8.1
-mkdir -p /apps/sources/EasyBuild/
-cd /apps/sources/EasyBuild
-curl -O https://raw.githubusercontent.com/hpcugent/easybuild-framework/develop/easybuild/scripts/bootstrap_eb.py
-mv bootstrap_eb.py bootstrap_eb_${EASYBUILD_VERSION}.py
+sh submit.sh
 
-5) Bootstrap EasyBuild in apps dir.
-python /apps/sources/EasyBuild/bootstrap_eb_${EASYBUILD_VERSION}.py \
-${HPC_ENV_PREFIX}
+5) Submit jobs
+navigate to jobs folder (this will be outputted at the step before this one).
+sh submit.sh
 
-6) Sanity check
-
-logout and login again
-
-module load EasyBuild
-module list
-eb --version
-
-7) Install toolchain
-eb foss-2015b.eb –robot
-
-Note: some sources should be downloaded manually
-
-scp gcc-4.9.3.tar.bz2 /apps/sources/g/GCC/
-gmp-6.0.0a.tar.bz2 /apps/sources/g/GCC/
-mpc-1.0.2.tar.gz /apps/sources/g/GCC/
-
-
-8) Installing additional packages 
-The following packages should be on the cluster/VM (this can only done with root access:
-yum install libibverbs-devel
-yum install openssl-devel
-yum install unzip
-yum install libX11-devel
-yum install libXrender-devel
-yum install libXext-devel
-yum install mesa-libGL-devel
-yum install mesa-libGLU-devel
 </p>
+
 </div>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
