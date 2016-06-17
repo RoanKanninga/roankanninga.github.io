@@ -50,51 +50,24 @@ window.onclick = function(event) {
       <section id="main_content" class="inner">
         <h3>
 		<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+		<div class="dropdown">
 		<ul>
-  			<li><a class="active" href="#home">Home</a></li>
+  			<li><a href="#home">Home</a></li>
   			<li class="dropdown">
-				<a href="#" class="dropbtn">Installation</a>
+				<a href="#" class="dropbtn">Installation Manual</a>
 				<div class="dropdown-content">
 				<a href="https://roankanninga.github.io/InstallEnv.html">Installing Environment</a>
 				<a href="https://roankanninga.github.io/InstallNGS.html">Installing NGS_DNA pipeline</a>
   				<a href="https://roankanninga.github.io/InstallRunNGS.html">Prepare and Run pipeline</a>
-				</div>
-			</li>
+			</div>
 			<li><a href="https://github.com/NGS_DNA">Source code</a></li>
-			<li><a href="https://roankanninga.github.io/Documentation.html">Documentation</a></li>	
-		</ul>
+			<li><a class="active" href="https://roankanninga.github.io/Documentation.html">Documentation</a></li>
+		</li>
+	</ul>
 <p>
-1) Copy rawdata to rawdata ngs folder
-scp –r 198210_SEQ_RUNTEST_FLOWCELLXX \
-username@yourcluster: ${root}/groups/$groupname/${tmpDir}/rawdata/ngs/
-
-2) Create a folder in the generatedscripts folder
-mkdir ${root}/groups/$groupname/${tmpDir}/generatedscripts/TestRun
-
-3) Copy samplesheet to generatedscripts folder
-scp –r TestRun \
-username@yourcluster:/groups/$groupname/${tmpDir}/generatedscripts/
-
-Note: the name of the folder should be the same as csv file
-
-4) Run the generate script 
-module load NGS_DNA
-cd ${root}/groups/$groupname/${tmpDir}/generatedscripts/TestRun
-cp $EBROOTNGS_DNA/generate_template.sh .
-sh generate_template.sh
-cd scripts
-
-Note: if you want to run locally, you should change in the CreateInhouseProjects.sh script the backend (this can be done almost at the end of the script where you have something like:
-sh ${EBROOTMOLGENISMINCOMPUTE}/molgenis_compute.sh 
-search for –b slurm and change it into –b localhost
-
-sh submit.sh
-
-5) Submit jobs
-navigate to jobs folder (this will be outputted at the step before this one).
-sh submit.sh
 
 </p>
+</div>
 
 </div>
     <!-- FOOTER  -->
