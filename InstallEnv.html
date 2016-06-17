@@ -12,28 +12,6 @@
   </head>
 
   <body>
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
@@ -69,7 +47,7 @@ window.onclick = function(event) {
                                 </div>
                         </li>
                 </ul>
-<p>
+<pre>
 
 Install environment
 1) Get depad-utils and configure environment.
@@ -139,7 +117,7 @@ yum install libXrender-devel
 yum install libXext-devel
 yum install mesa-libGL-devel
 yum install mesa-libGLU-devel
-</p>
+</pre>
 </div>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
