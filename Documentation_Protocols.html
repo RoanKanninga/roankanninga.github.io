@@ -7,33 +7,16 @@
     <meta name="description" content="Roankanninga.GitHub.io : ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="https://roankanninga.github.io/stylesheets/stylesheet.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script>
+    $(function(){
+        $("#includedContent").load("https://roankanninga.github.io/content.html");
+    });
+    </script>
     <title>Roankanninga.GitHub.io</title>
   </head>
 
   <body>
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
@@ -48,11 +31,7 @@ window.onclick = function(event) {
       <section id="main_content" class="inner">
         <h3>
         <!-- MAIN CONTENT -->
-        <script src="http://www.w3schools.com/lib/w3data.js"></script>
-        <script>
-                w3IncludeHTML();
-        </script>
-    <!-- MAIN CONTENT -->
+<div id="includedContent"></div>
 <p>
 
 </p>

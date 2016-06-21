@@ -7,7 +7,12 @@
     <meta name="description" content="Roankanninga.GitHub.io : ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="https://roankanninga.github.io/stylesheets/stylesheet.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script>
+    $(function(){
+        $("#includedContent").load("https://roankanninga.github.io/content.html");
+    });
+    </script>
     <title>Roankanninga.GitHub.io</title>
   </head>
 
@@ -26,11 +31,7 @@
       <section id="main_content" class="inner">
         <h3>
         <!-- MAIN CONTENT -->
-        <script src="http://www.w3schools.com/lib/w3data.js"></script>
-        <script>
-                w3IncludeHTML();
-        </script>
-    <!-- MAIN CONTENT -->
+<div id="includedContent"></div>
 <p>
 1) Dependency tree
 -	BWA (0.7.12)
