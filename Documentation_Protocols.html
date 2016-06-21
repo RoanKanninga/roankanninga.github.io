@@ -32,13 +32,14 @@
         <!-- MAIN CONTENT -->
 <div id="includedContent"></div>
 <pre>
-Step 1: Spike in the PhiX reads
+<b>Step 1: Spike in the PhiX reads</b>
 To see whether the pipeline ran correctly. The reads will be inserted in each sample, in a later step (step 25) of the pipeline there will be a concordance check to see if the SNPs that are put in, will be found.
 
 Scriptname: SpikePhiX
 Input: raw sequence file in the form of a gzipped fastq file 
 Output: FastQ files (${filePrefix}_${lane}_${barcode}.fq.gz)*
-Step 2: Check the Illumina encoding
+
+<b>Step 2: Check the Illumina encoding</b>
 In this step the encoding of the FastQ files will be checked. Older (2012 and older) sequence data contains the old Phred+64 encoding (this is called Illumina 1.5 encoding), new sequence data is encoded in Illumina 1.8 or 1.9 (Phred+33). If the data is 1.5, it will be converted to 1.9 encoding
 Scriptname: CheckIlluminaEncoding
 Input:. FastQ files (${filePrefix}_${lane}_${barcode}.fq.gz)*
